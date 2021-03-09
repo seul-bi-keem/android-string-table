@@ -8,7 +8,7 @@ import java.security.InvalidParameterException
 class TestStringTableGeneratorXml {
     @Test
     fun test() {
-        val fileSource = File("./src/test/java/stringtable/sample/StringTable.xlsx")
+        val fileSource = File("./output/sample.xlsx")
         val resRoot = File("./src/test/java/stringtable/sample/res/")
         val pathSource = getPathWithFile(fileSource)
         val pathRes = getPathWithFile(resRoot)

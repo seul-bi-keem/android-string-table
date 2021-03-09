@@ -1,4 +1,4 @@
-package com.jeff.download.google.drive
+package download.google.drive
 
 import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
@@ -12,7 +12,7 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
-import com.jeff.download.Downloadable
+import download.Downloadable
 import java.io.*
 
 class GoogleDriveDownload(private val credentialsFilePath: String, private val fileId: String, private val filename: String?) : Downloadable {

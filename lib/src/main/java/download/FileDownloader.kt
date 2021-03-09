@@ -1,6 +1,6 @@
-package com.jeff.download
+package download
 
-import com.jeff.download.google.drive.GoogleDriveDownload
+import download.google.drive.GoogleDriveDownload
 import java.io.File
 import java.lang.IllegalArgumentException
 

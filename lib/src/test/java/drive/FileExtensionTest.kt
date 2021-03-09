@@ -1,6 +1,7 @@
 package com.jeff.download.google.drive
 
 import com.google.api.services.drive.model.File
+import download.google.drive.FileExtension
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

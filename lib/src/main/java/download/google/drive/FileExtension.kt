@@ -1,4 +1,4 @@
-package com.jeff.download.google.drive
+package download.google.drive
 
 import com.google.api.services.drive.model.File
 
@@ -7,13 +7,13 @@ interface FileExtension{
     fun exportMimeType(): String
 
     companion object{
-        fun from(file: File): FileExtension{
+        fun from(file: File): FileExtension {
             return DriveFileExtension(file)
         }
     }
 }
 
-class DriveFileExtension(private val file: File): FileExtension{
+class DriveFileExtension(private val file: File): FileExtension {
     private val extensionMap = mapOf(
             "application/vnd.google-apps.spreadsheet" to "xlsx"
     )

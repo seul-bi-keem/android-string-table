@@ -7,7 +7,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
     testImplementation 'org.hamcrest:hamcrest-core:1.3'
-
     compile 'org.apache.poi:poi:3.10-FINAL'
     compile 'commons-codec:commons-codec:1.5'
     compile 'org.apache.poi:poi-ooxml:3.10-FINAL'
@@ -17,6 +16,10 @@ dependencies {
     compile 'dom4j:dom4j:1.6.1'
     compile 'xml-apis:xml-apis:1.0.b2'
     compile 'org.jdom:jdom2:2.0.6'
+    implementation 'com.google.api-client:google-api-client:1.30.4'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.30.4'
+    implementation 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
@@ -55,4 +58,50 @@ compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+task stringResourceDownload(group: 'download', type: JavaExec) {
+    // Google Drive Credentals file 을 다운받아서 해당 파일을 설정해줘야한다.
+    // https://developers.google.com/drive/api/v3/quickstart/java
+    def googleDriveCredentials = './credentials.json'
+
+    // Google SpreadSheet Field id 를 설정해워야한다.
+    // https://docs.google.com/spreadsheets/d/{fieldId}/edit#gid=1955937470
+    def googleSpreadSheedFieldId = "spread sheet field id"
+
+    main = 'com.jeff.download.FileDownloader'
+    classpath = sourceSets.main.runtimeClasspath
+    args = [googleDriveCredentials, googleSpreadSheedFieldId]
+}
+
+class stringResourceUpdaterExtension {
+    String credentialPath
+    String sheetFieldID
+    String sheetFileName
+    String sheetName
+    String outputResourcePath
+}
+
+def extension = project.extensions.create('stringResource', stringResourceUpdaterExtension)
+
+stringResource {
+    credentialPath = "./credentials.json"
+    sheetFieldID = "12hmQ7U0npYM4hK4ck3qN9bMUDRu-ZcPueluxz5X4w30"
+    sheetFileName = "sample"
+    sheetName = "Main"
+    outputResourcePath = "./output"
+}
+
+task downloadExcel(group: 'resources', type: JavaExec) {
+    main = 'download.FileDownloader'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = [extension.credentialPath, extension.sheetFieldID, extension.sheetFileName]
+}
+
+task convertAndroidResource(group: 'resources', type: JavaExec){
+    main = 'stringtable.StringTableGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = [extension.sheetFileName, extension.outputResourcePath, extension.sheetName]
 }

@@ -1,6 +1,6 @@
-package com.jeff.download.google.drive
+package drive
 
-import com.jeff.download.FileDownloader
+import download.FileDownloader
 import org.junit.Test
 import java.lang.IllegalArgumentException
 
